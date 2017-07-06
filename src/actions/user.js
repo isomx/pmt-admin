@@ -1,0 +1,24 @@
+export const types = {
+  CREATE: 'USER_CREATE',
+  CREATE_PROCESSING: 'USER_CREATE_PROCESSING',
+  CREATE_FULFILLED: 'USER_CREATE_FULFILLED',
+  CREATE_REJECTED: 'USER_CREATE_REJECTED',
+  CHECK_AVAILABILITY: 'USER_CHECK_AVAILABILITY',
+  CHECK_AVAILABILITY_PROCESSING: 'USER_CHECK_AVAILABILITY_PROCESSING',
+  CHECK_AVAILABILITY_FULFILLED: 'USER_CHECK_AVAILABILITY_FULFILLED',
+  CHECK_AVAILABILITY_REJECTED: 'USER_CHECK_AVAILABILITY_REJECTED',
+}
+
+export const createNew = dispatch => payload => {
+  dispatch({
+    type: types.CREATE,
+    payload,
+  });
+};
+
+export const createNewCheck = dispatch => payload => {
+  dispatch({
+    type: types.CHECK_AVAILABILITY,
+    payload,
+  });
+}
