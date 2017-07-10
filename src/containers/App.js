@@ -1,87 +1,98 @@
 /* eslint-disable */
 import React, { Component } from 'react';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { types as userActions } from '../actions/user';
-import { loadData } from '../actions/render';
-import PropTypes from 'prop-types';
+import NavigationDrawer from './NavigationDrawer';
+import Drawer from 'react-md/lib/Drawers';
+import Databases from '../components/Databases';
+import Permissions from '../components/Permissions';
+import DbComponents from './DbComponents';
+import LiveCoding from '../components/LiveCoding';
+import Users from '../components/Users';
+import { types as navTypes } from '../actions/nav';
+import Login from './Login';
 import Toolbar  from 'react-md/lib/Toolbars';
-import cn from 'classnames';
-import Button from 'react-md/lib/Buttons';
-import TextField from 'react-md/lib/TextFields';
-import CircularProgress from 'react-md/lib/Progress/CircularProgress';
-
-import componentFromStream from 'recompose/componentFromStream';
-import mapPropsStream from 'recompose/mapPropsStream';
-import renderComponent from 'recompose/renderComponent';
-import compose from 'recompose/compose';
-import getContext from 'recompose/getContext';
-import { Observable } from 'rxjs/Observable';
-
+import getNavItems from '../routes';
+import TabsContainer from 'react-md/lib/Tabs/TabsContainer';
+import Tabs from 'react-md/lib/Tabs/Tabs';
+import Tab from 'react-md/lib/Tabs/Tab';
 import rxjsConfig from 'recompose/rxjsObservableConfig';
+import cn from 'classnames';
+import FontIcon from 'react-md/lib/FontIcons';
 import setObservableConfig from 'recompose/setObservableConfig';
 setObservableConfig(rxjsConfig);
+import '../scss/components/_Tabs.scss';
 
-const App = props => {
-  console.log('props = ', props);
-  return (
-    <div>
-      <TextField
-        //leftIcon={<CircularProgress id="spinner" scale={1} key="progress"/>}
-        //inlineIndicator={<CircularProgress id="spinner" scale={1} key="progress"/>}
-        label="First Name"
-        id="fname"
-        name="fname"
-      />
-      <TextField
-        //leftIcon={<CircularProgress id="spinner" scale={1} key="progress"/>}
-        //inlineIndicator={<CircularProgress id="spinner" scale={1} key="progress"/>}
-        label="Last Name"
-        id="lname"
-        name="lname"
-      />
-      <TextField
-        label="Email"
-        id="email"
-        name="email"
-      />
-      <TextField
-        leftIcon={<CircularProgress id="spinner" scale={1} key="progress" style={{opacity: 0}}/>}
-        //inlineIndicator={<CircularProgress id="spinner" scale={1} key="progress"/>}
-        label="Username"
-        id="username"
-        name="username"
-      />
-      <Button
-        disabled
-        //icon
-        children={<CircularProgress id="spinner" scale={1} key="progress"/>}
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.registerContainer = this.registerContainer.bind(this);
+  }
 
-        raised
-        label="MANAGE"
-        onClick={(e) => { props.checkUser({
-        firstName: 'Josh',
-        lastName: 'Test1',
-        email: 'josh23@ugilityenterprises.com',
-        username: 'jtest1',
-        password: 'kawasaki',
-      }) } }
-      />
-      <Button raised primary label="Manage">keyboard_arrow_right</Button>
-    </div>
-  );
+  registerContainer(ref) {
+    if (ref) {
+      this.container = ref;
+    }
+  }
+
+  render() {
+    const {
+      location: { pathname, search },
+      defaultMedia,
+      toolbarTitle,
+      toolbarProminent,
+    } = this.props;
+    const { navItems, pageTitle } = getNavItems(pathname);
+    return (
+      <NavigationDrawer {...this.props}>
+        <Login/>
+        <Switch>
+          <Route exact path={navTypes.DATABASES} render={props => <Databases {...props} />} />
+          <Route path={navTypes.DB_COMPONENTS} render={props => <DbComponents {...props} />} />
+          <Route path={navTypes.USERS} render={props => <Users {...props} />} />
+          <Route path={navTypes.PERMISSIONS} render={props => <Permissions {...props} />} />
+          <Route path={navTypes.LIVE_CODING} render={props => <LiveCoding {...props} />} />
+        </Switch>
+      </NavigationDrawer>
+    )
+    return (
+        <NavigationDrawer
+          ref={this.registerContainer}
+          drawerTitle="PMT"
+          defaultMedia={defaultMedia}
+          toolbarClassName="main-toolbar"
+          toolbarTitle={pageTitle}
+          defaultVisible={false}
+          //toolbarTitle="Predictive Marketing"
+          //toolbarProminent={toolbarProminent}
+          toolbarProminent={true}
+          toolbarChildren={tabs2}
+          navItems={navItems}
+          constantDrawerType={true}
+          drawerType={Drawer.DrawerTypes.TEMPORARY}
+        >
+
+          <Switch>
+            <Route exact path={navTypes.DATABASES} render={props => <Databases {...props} />} />
+            <Route path={navTypes.DB_COMPONENTS} render={props => <DbComponents {...props} />} />
+            <Route path={navTypes.USERS} render={props => <Users {...props} />} />
+          </Switch>
+        </NavigationDrawer>
+    );
+  }
 
 }
-
-
 function mapStateToProps(store, ownProps) {
-  return {}
+  return {
+    ...store.ui.drawer,
+    loggedIn: store.user.loggedIn,
+  }
 }
 
 function mapDispatchToProps(dispatch, state) {
   return {
-    createNewUser: (payload) => dispatch({type: userActions.CREATE, payload}),
-    checkUser: (payload) => dispatch({type:userActions.CHECK_AVAILABILITY, payload}),
+
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

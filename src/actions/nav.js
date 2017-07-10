@@ -1,69 +1,26 @@
-import { push } from 'react-router-redux';
-const routerLocationChange = '@@router/LOCATION_CHANGE';
-/**
-export const navTransitionIn = (dispatch) => {
-  return (currLocation, toUrl, fromRect) => {
-    const { pathname, state } = currLocation;
-    const location = {
-      pathname: toUrl,
-      state: {
-        [pathname]: state && state[pathname] ? {...state[pathname], [toUrl]: fromRect} : {[toUrl]: fromRect},
-      }
-    }
-    dispatch(push(location));
-  }
-}
-
-export const navTransitionIn = (url) => {
-  return (dispatch, getState) => {
-    console.log('getState = ', getState());
-    dispatch(push(url));
-  }
-}
- **/
-/**
-export const navTransitionIn = (e, url) => (dispatch, getState) => {
-  console.log('e.pageX = ', e.pageX);
-  console.log('e.pageY = ', e.pageY);
-  dispatch(push(url));
-  setTimeout(() => {
-    // dispatch(push(url));
-  }, 1500);
-  // dispatch({type: 'My Action', payload: {something: '123', something2: '456'}});
-}
- **/
-
-/**
-export const toDashboard = {
-  type: routerLocationChange,
-  payload: {
-    url: '/dashboard',
-  }
-}
- **/
-export const toDashboard = push('/dashboard');
-export const toFunnels = push('/funnels');
-
-export const toRoute = (key) => {
-  let action = {
-    type: routerLocationChange,
-    payload: {},
-  };
-  switch(key) {
-    case 'dashboard':
-      action.payload.url = '/dashboard';
-      return action;
-    default:
-      action.payload.url = '/';
-      return action;
-  }
-}
-
-export const navTransitionIn = (e, url) => {
-  console.log('e.pageX = ', e.pageX);
-  console.log('e.pageY = ', e.pageY);
-  return {
-    type: '@@router/LOCATION_CHANGE',
-    payload: 'SOMETHING'
-  }
-}
+export const types = {
+  LOCATION_CHANGE: '@@router/LOCATION_CHANGE',
+  DASHBOARD: '/dashboard',
+  DATABASES: '/databases',
+  DB_APPS: '/databases/apps',
+  DB_APPS_EDIT: '/databases/apps/edit',
+  DB_APPS_INSERT: '/databases/apps/insert',
+  DB_COMPONENTS: '/databases/components',
+  DB_COMPONENTS_EDIT: '/databases/components/edit',
+  DB_COMPONENTS_INSERT: '/databases/components/insert',
+  DB_NODES: '/databases/nodes',
+  DB_NODES_EDIT: '/databases/nodes/edit',
+  DB_NODES_INSERT: '/databases/nodes/insert',
+  DB_SITES: '/databases/sites',
+  DB_SITES_EDIT: '/databases/sites/edit',
+  DB_SITES_INSERT: '/databases/sites/insert',
+  DB_USERS: '/databases/users',
+  DB_USERS_EDIT: '/databases/users/edit',
+  DB_USERS_INSERT: '/databases/users/insert',
+  USERS: '/users',
+  USERS_ADD: '/users?add=true',
+  USERS_EDIT: '/users?edit=true',
+  USERS_SEARCH: '/users?search=true',
+  PERMISSIONS: '/permissions',
+  LIVE_CODING: '/live-coding',
+};

@@ -1,27 +1,8 @@
-/* eslint-disable */
-import dashboard from './dashboard';
-import users from './users';
-import databases from './databases';
-import permissions from './permissions';
-import liveCoding from './liveCoding';
-
 import React from 'react';
 import FontIcon from 'react-md/lib/FontIcons';
 // import Avatar from 'react-md/lib/Avatars';
 import { Link } from 'react-router-dom';
-
-/******
- * Usage 1: Standard menu rendering from provided routes
- */
-const rawRoutes = [].concat(dashboard, users, permissions, liveCoding, databases);
-
-export const routesRaw = rawRoutes; //This is because I'm moving on and coming back to navItems. Just putting in an export so it continues to work
-
-/*******
- * Usage 2: Injecting dividers and/or subheaders between provided routes
- */
-
-// export default routes.concat(dashboard, [{divider: true}], [{subheader: true, label: 'Websites'}], websites, [{divider: true}], [{subheader: true, label: 'Contacts/Followups'}], contacts, training);
+import { routesRaw } from '../routes';
 
 /**
  * Using a uniqueKey counter to enable the easy addition of dividers and subheaders, since dividers in
@@ -74,6 +55,7 @@ function buildRealRoutes(route, parents = [], titlePrefix = '') {
     rComponent = Link;
   } else {
     rComponent = 'div';
+    //rComponent = Link;
   }
 
   let to, key;
@@ -85,9 +67,9 @@ function buildRealRoutes(route, parents = [], titlePrefix = '') {
      *  If uncommented, the parent container will initiate a navigation action when clicked vs just opening
      *  NOTE: Must also change rComponent = 'div' to rComponent = Link  (above if/else statement)
 
-     to = `${prefix}${path}`;
+    to = `${prefix}${path}`;
 
-     *********/
+    *********/
     key = 'menuParent' + uniqueKey;
   }
   return {
@@ -102,7 +84,7 @@ function buildRealRoutes(route, parents = [], titlePrefix = '') {
   };
 }
 
-const routes = rawRoutes.map(route => buildRealRoutes(route));
+const routes = routesRaw.map(route => buildRealRoutes(route));
 function isNestedActive(nestedItems) {
   return nestedItems && nestedItems.some(({ to, nestedItems }) => to === location.pathname || isNestedActive(nestedItems));
 }
@@ -115,11 +97,11 @@ function updateActiveRoutes(route, pathname) {
   /***** If you want both the parent menu AND the child to have the active class, use below **********/
   const active = to === pathname || isNestedActive(nestedItems);
   /***************
-   If you only want the active child in the submenu to be active:
-   const active = to === pathname;
-   const nestedActive = isNestedActive(nestedItems);
+    If you only want the active child in the submenu to be active:
+    const active = to === pathname;
+    const nestedActive = isNestedActive(nestedItems);
 
-   NOTE: Must also change defaultOpen prop below to: nestedItems && nestedActive
+    NOTE: Must also change defaultOpen prop below to: nestedItems && nestedActive
    *************/
   if (to === pathname) currPageTitle = props.pageTitle;
   delete props.pageTitle;
@@ -135,8 +117,9 @@ function updateActiveRoutes(route, pathname) {
 
 export default function getNavItems(pathname = '') {
   currPageTitle = '';
+  const navItems = routes.map(route => updateActiveRoutes(route, pathname));
   return {
-    navItems: routes.map(route => updateActiveRoutes(route, pathname)),
+    navItems,
     pageTitle: currPageTitle ? currPageTitle : 'Predictive Marketing',
   }
 }

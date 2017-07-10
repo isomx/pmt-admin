@@ -1,5 +1,5 @@
-import { nav } from './nav';
 import { renderLoadData, renderDataLoaded } from './render';
 import UserLogic from './user';
+import Permissions from './permissions';
 
-export default [nav, renderLoadData, renderDataLoaded, ...UserLogic];
+export default [renderLoadData, renderDataLoaded, ...UserLogic, ...Permissions];

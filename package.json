@@ -1,5 +1,5 @@
 {
-  "name": "pmt-app",
+  "name": "pmt-admin",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -12,6 +12,7 @@
     "query-string": "^4.3.4",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-live": "^1.7.0",
     "react-md": "^1.0.12",
     "react-redux": "^5.0.4",
     "react-router-dom": "^4.1.1",

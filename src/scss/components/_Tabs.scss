@@ -1,0 +1,92 @@
+@import '../globals';
+
+/*
+Renders a tab component flush with the toolbar. Add to <MD Tabs> component
+ */
+.md-tabs-fixed-toolbar {
+  top: 64px;
+  position: fixed !important;
+  width: 100%;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+/*
+Adds the correct offset to the child of an individual <MD Tab> component
+ */
+.md-tabs-fixed-toolbar-offset {
+  padding-top: 112px;
+  height: 95%;
+}
+
+/*
+Adds the correct offset to the child of an individual <MD Tab> component when the tabs utilize icons
+ */
+.md-tabs-fixed-toolbar-offset--icons {
+  padding-top: 136px;
+  height: 100%;
+}
+
+@media screen and (min-width: 320px) {
+  .md-tabs-fixed-toolbar {
+    top: 56px;
+    position: fixed !important;
+    width: 100%;
+    left: 0;
+    right: 0;
+    z-index: 2
+  }
+
+  .md-tabs-fixed-toolbar-offset {
+    padding-top: 104px;
+    height: 95%;
+  }
+
+  .md-tabs-fixed-toolbar-offset--icons {
+    padding-top: 128px;
+    height: 100%;
+  }
+}
+
+@media screen and (min-width: 320px) and (orientation: landscape) {
+  .md-tabs-fixed-toolbar {
+    top: 48px;
+    position: fixed !important;
+    width: 100%;
+    left: 0;
+    right: 0;
+    z-index: 2
+  }
+
+  .md-tabs-fixed-toolbar-offset {
+    padding-top: 96px;
+    height: 95%;
+  }
+
+  .md-tabs-fixed-toolbar-offset--icons {
+    padding-top: 120px;
+    height: 100%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .md-tabs-fixed-toolbar {
+    top: 64px;
+    position: fixed !important;
+    width: 100%;
+    left: 0;
+    right: 0;
+    z-index: 2
+  }
+
+  .md-tabs-fixed-toolbar-offset {
+    padding-top: 112px;
+    height: 95%;
+  }
+
+  .md-tabs-fixed-toolbar-offset--icons {
+    padding-top: 136px;
+    height: 95%;
+  }
+}

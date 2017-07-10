@@ -1,8 +1,15 @@
 export default [{
-  path: 'contacts',
-  label: 'Contacts',
+  path: 'users',
+  label: 'Users',
   leftIcon: 'people',
-  pageTitle: 'Contacts',
+  pageTitle: 'Users',
+}];
+/**
+export default [{
+  path: 'users',
+  label: 'Users',
+  leftIcon: 'people',
+  pageTitle: 'Users',
   nestedItems: [{
     path: 'lists',
     label: 'Lists',
@@ -17,3 +24,4 @@ export default [{
     pageTitle: 'Templates',
   }],
 }];
+**/
